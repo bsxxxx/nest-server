@@ -6,7 +6,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import User from './models/user.model';
 // import { logger } from './middleware/logger.middleware';
-// import { requestMiddleware } from '@/middleware/request.middleware'; // 全局请求拦截中间件
+import { requestMiddleware } from '@/middleware/request.middleware'; // 全局请求拦截中间件
 import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

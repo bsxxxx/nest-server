@@ -32,4 +32,8 @@ export default registerAs('database', () => ({
     dateStrings: true,
     typeCast: true,
   },
+  pool: {
+    min: 5, // 设置最小空闲连接数
+    // ...
+  },
 }));

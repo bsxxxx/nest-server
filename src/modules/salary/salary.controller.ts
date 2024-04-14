@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Query, Res } from '@nestjs/common';
 import { SalaryService } from './salary.service';
-import { CreateSalaryDto, DeleteSalaryDto } from './dto/create-salary.dto';
+import { CreateSalaryDto } from './dto/create-salary.dto';
 import { responseMessage } from '@/utils';
 import { Roles } from '../auth/roles';
 import { Role } from '@/utils/enums';
-import { ApiHeader, ApiOperation, ApiQuery, ApiTags, PickType } from '@nestjs/swagger';
+import { ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
 @Roles(Role.ORGADM)
 @ApiTags('工资')
 @ApiHeader({

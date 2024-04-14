@@ -1,5 +1,6 @@
 import { Column, Model, Table, NotEmpty, Length, DataType, HasMany } from 'sequelize-typescript';
 import Coursetable from './coursetable.model';
+import RechargeRecords from './recharge-record.model';
 /**学生表 */
 @Table({ tableName: 'student_list' })
 export default class Student extends Model {
@@ -25,8 +26,6 @@ export default class Student extends Model {
     @Column
     channel: string;
     @Column
-    recharge_record: string;
-    @Column
     purchase_date: string;
     @Column
     course_category: string;
@@ -50,4 +49,6 @@ export default class Student extends Model {
     notes: string;
     @HasMany(() => Coursetable, { as: "course" })
     courses: Coursetable[];
+    @HasMany(() => RechargeRecords, { as: "records" })
+    records: RechargeRecords[];
 }

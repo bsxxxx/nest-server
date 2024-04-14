@@ -68,6 +68,10 @@ export class StudentService {
         include: [
           /** 课程状态为1或者3 表示已上课 */
           [literal(`COALESCE(total_hours, 0) - (SELECT COUNT(*) FROM coursetable WHERE student_id = Student.id AND status IN (1, 3))`), 'remaining_class_hours'],
+          [
+            literal(`(SELECT COUNT(*) FROM recharge_records WHERE student_id = Student.id)`),
+            'recharge_record'
+          ]
         ],
       },
     })
@@ -136,7 +140,6 @@ export class StudentService {
         '就读年级': 'grade',
         '基本信息（学习目标）': 'student_bg',
         '获课来源': 'channel',
-        '充值记录': 'recharge_record',
         '购买日期': 'purchase_date',
         '课程类别': 'course_category',
         '总课时': 'total_hours',

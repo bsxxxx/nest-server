@@ -65,13 +65,6 @@ export class CreateStudentDto {
     channel: string;
     @ApiProperty({
         type: String,
-        description: '充值记录',
-        default: 'test',
-        required: false,
-    })
-    recharge_record: string;
-    @ApiProperty({
-        type: String,
         description: '购买日期',
         default: '2022/3/19',
         required: false,

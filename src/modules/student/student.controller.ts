@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Delete, Query, Res, UseInterceptors, Uploa
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateUserDto } from './dto/update-student.dto';
-import { ApiHeader, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiHeader, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { unlink } from 'fs/promises';
@@ -13,6 +13,7 @@ import { Role } from '@/utils/enums';
   required: true,
   description: 'token令牌',
 })
+@ApiTags('学生表')
 @ApiBearerAuth()
 @Roles(Role.ORGADM, Role.CLERK, Role.COURSE_CONSULTANT, Role.LEARNING_CONSULTANT)
 @Controller()

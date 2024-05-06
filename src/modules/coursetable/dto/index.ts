@@ -26,7 +26,8 @@ export class CoursetableDto {
   @ApiProperty({
     type: String,
     default: '1',
-    description: '表示时间段的整数列，可以使用 1 到 12 的数字来表示每天的不同时间段',
+    description:
+      '表示时间段的整数列，可以使用 1 到 12 的数字来表示每天的不同时间段',
   })
   time_slot?: number;
   @ApiProperty({
@@ -47,7 +48,6 @@ export class CoursetableDto {
     description: '上课日期',
   })
   date?: string;
-
 }
 export class QueryCoursetableDto {
   @ApiProperty({
@@ -56,6 +56,12 @@ export class QueryCoursetableDto {
     description: '教师id',
   })
   teacher_id?: number;
+  @ApiProperty({
+    type: String,
+    default: '0',
+    description: '状态',
+  })
+  status?: number;
   @ApiProperty({
     type: String,
     default: '1',

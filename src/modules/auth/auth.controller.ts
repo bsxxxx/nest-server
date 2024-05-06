@@ -15,7 +15,6 @@ import {
 import { responseMessage } from '@/utils';
 import type { SessionTypes } from '@/utils/types';
 import { Public } from '@/utils';
-
 import { AuthService } from './auth.service'; // Auth Service
 import {
   LoginParamsDto,
@@ -59,7 +58,6 @@ export class AuthController {
    * @description: 获取当前用户信息
    */
   @Get('userinfo')
-
   @ApiHeader({
     name: 'Authorization',
     required: true,
@@ -67,7 +65,7 @@ export class AuthController {
   })
   @ApiOperation({ summary: '获取当前用户信息' })
   async getCurrentUserInfo(@Session() session: SessionTypes) {
-    const { id, name: username, avatar, role } = session.currentUserInfo
-    return responseMessage({ id, username, avatar, role });
+    const { id, name: username, english_name, avatar, role } = session.currentUserInfo
+    return responseMessage({ id, username, english_name, avatar, role });
   }
 }

@@ -15,6 +15,7 @@ export type EnumKeys<T> = keyof T;
 export type UserAttributes = {
   id: string; // 用户id
   name: string; // 用户名称
+  english_name: string;//英文名
   password: string; // 密码
   phone: string; // 电话号码
   avatar: string; // 用户头像

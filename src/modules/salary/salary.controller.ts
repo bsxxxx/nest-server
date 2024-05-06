@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Res,
+  Patch,
+} from '@nestjs/common';
 import { SalaryService } from './salary.service';
 import { CreateSalaryDto } from './dto/create-salary.dto';
 import { responseMessage } from '@/utils';
@@ -14,7 +24,7 @@ import { ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
 })
 @Controller('salary/user')
 export class SalaryController {
-  constructor(private readonly salaryService: SalaryService) { }
+  constructor(private readonly salaryService: SalaryService) {}
   @ApiOperation({ summary: '创建工资表' })
   @Post()
   create(@Body() createSalaryDto: CreateSalaryDto) {
@@ -23,9 +33,13 @@ export class SalaryController {
 
   @ApiOperation({ summary: '获取工资表' })
   @Get()
-  async findAll(@Query('user_id') user_id: string) {
-    const data = await this.salaryService.findAll({ user_id });
-    return responseMessage(data)
+  async findAll(@Query() query: any) {
+    const data = await this.salaryService.findAll(query);
+    return responseMessage(data);
+  }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateSalary: CreateSalaryDto) {
+    return this.salaryService.update(+id, updateSalary);
   }
 
   @Delete(':id')
@@ -34,8 +48,9 @@ export class SalaryController {
   }
 
   @Get('salary-excel')
-  async exportSalary(@Res() res, @Query("id") user_id) {
-    const { buffer, filename, mimeType }: any = await this.salaryService.export({ user_id })
+  async exportSalary(@Res() res, @Query() query: any) {
+    const { buffer, filename, mimeType }: any =
+      await this.salaryService.export(query);
     res.set({
       'Content-Type': mimeType,
       'Content-Disposition': `attachment; filename="${filename}"`,

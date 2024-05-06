@@ -44,7 +44,7 @@ export class StudentController {
     }
     return { msg: "编辑失败" };
   }
-  @Post('bind-teacher')
+  @Post('bind')
   async bindTeacher(@Body() updateUserDto: UpdateUserDto) {
     const [status] = await this.studentService.update(updateUserDto);
     if (status == 1) {
@@ -58,6 +58,7 @@ export class StudentController {
     return this.studentService.remove(id);
   }
   @Get('student-bind-list')
+  @Roles(Role.ORGADM, Role.CLERK, Role.COURSE_CONSULTANT, Role.LEARNING_CONSULTANT, Role.TEACHER)
   async getBindToTeacherList(@Query('id') teacher_id: string) {
     const data = await this.studentService.findAll({ teacher_id });
     return { data, code: 200 }

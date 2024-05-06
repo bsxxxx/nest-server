@@ -26,25 +26,19 @@ export default class Student extends Model {
     @Column
     channel: string;
     @Column
-    purchase_date: string;
-    @Column
-    course_category: string;
-    @Column
-    total_hours: string;
-    @Column
-    course_unit_price: string;
-    @Column
-    total_amount: string;
-    @Column
-    textbook: string;
+    trial_class_category: string;
     @Column
     mail: string;
     @Column
-    settlement_date: string;
-    @Column
     teacher_name: string;
     @Column
+    operation_name: string;
+    @Column
     teacher_id: string;
+    @Column
+    sales_person_id: string;
+    @Column
+    sales_person_name: string;
     @Column
     notes: string;
     @HasMany(() => Coursetable, { as: "course" })

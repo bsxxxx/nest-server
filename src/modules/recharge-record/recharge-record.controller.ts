@@ -1,6 +1,18 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Delete,
+  Param,
+  Patch,
+} from '@nestjs/common';
 import { RechargeRecordService } from './recharge-record.service';
-import { CreateRechargeRecordDto } from './dto/create-recharge-record.dto';
+import {
+  CreateRechargeRecordDto,
+  updateRechargeRecordDto,
+} from './dto/recharge-record.dto';
 import { responseMessage } from '@/utils';
 import { Roles } from '../auth/roles';
 import { Role } from '@/utils/enums';
@@ -12,10 +24,15 @@ import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 })
 @ApiBearerAuth()
 @ApiTags('充值记录')
-@Roles(Role.ORGADM, Role.CLERK, Role.COURSE_CONSULTANT, Role.LEARNING_CONSULTANT)
+@Roles(
+  Role.ORGADM,
+  Role.CLERK,
+  Role.COURSE_CONSULTANT,
+  Role.LEARNING_CONSULTANT,
+)
 @Controller('recharge-record')
 export class RechargeRecordController {
-  constructor(private readonly rechargeRecordService: RechargeRecordService) { }
+  constructor(private readonly rechargeRecordService: RechargeRecordService) {}
 
   @Post()
   create(@Body() createRechargeRecordDto: CreateRechargeRecordDto) {
@@ -25,6 +42,18 @@ export class RechargeRecordController {
   @Get()
   async findAll(@Query() query) {
     const data = await this.rechargeRecordService.findAll(query);
-    return responseMessage(data)
+    return responseMessage(data);
+  }
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    await this.rechargeRecordService.remove(+id);
+    return { msg: '删除成功' };
+  }
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateSellStudentDto: updateRechargeRecordDto,
+  ) {
+    return this.rechargeRecordService.update(+id, updateSellStudentDto);
   }
 }

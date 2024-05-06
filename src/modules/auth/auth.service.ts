@@ -42,9 +42,7 @@ export class AuthService {
     const userInfo = await this.userModel.findOne({ where });
 
 
-    if (!userInfo) {
-      throw new BadRequestException("用户名已存在！")
-    } else if (userInfo.password !== password) {
+    if (userInfo.password !== password) {
       throw new BadRequestException("密码不正确！")
     }
     return responseMessage(userInfo, '登录成功!');
@@ -71,27 +69,26 @@ export class AuthService {
         });
 
         // 将数据保存到session
-        const currentUserInfo = await this.userModel.findOne({ where: { id: userInfo.id } })
-        session.currentUserInfo = currentUserInfo;
+        const currentUserInfo = userInfo
+        session.currentUserInfo = currentUserInfo as any;
         await this.redisCacheService.cacheSet(
           `${userInfo.id}-${userInfo.name}`,
           token,
           RedisConfig().expiresin,
         );
-        const { id, name: username, role, avatar } = currentUserInfo
-        return {
-          data: {
-            token,
-            id,
-            username,
-            role,
-            avatar
+        const { id, name: username, role, avatar, english_name } = currentUserInfo
+        return responseMessage({
+          token,
+          id,
+          username,
+          english_name,
+          role,
+          avatar
 
-          },
-        };
+        })
       // 其它情况直接返回结果
       default:
-        return authResult;
+        return responseMessage(authResult);
     }
   }
 
